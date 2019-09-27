@@ -47,6 +47,12 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>edu.asu.diging</groupId>
+			<artifactId>rcn-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
