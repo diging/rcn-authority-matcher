@@ -2,11 +2,15 @@ package edu.asu.diging.rcn.core.model;
 
 import java.util.List;
 
-public interface ConventionDeclaration {
+public interface RightsDeclaration {
 
     String getId();
 
     void setId(String id);
+
+    String getLocalType();
+
+    void setLocalType(String localType);
 
     String getAbbreviation();
 
@@ -16,8 +20,8 @@ public interface ConventionDeclaration {
 
     void setCitation(String citation);
 
-    void setDescriptiveNote(List<String> descriptiveNote);
-
     List<String> getDescriptiveNote();
+
+    void setDescriptiveNote(List<String> descriptiveNote);
 
 }

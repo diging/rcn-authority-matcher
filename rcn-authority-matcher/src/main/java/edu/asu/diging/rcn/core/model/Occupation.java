@@ -2,11 +2,15 @@ package edu.asu.diging.rcn.core.model;
 
 import java.util.List;
 
-public interface Function {
+public interface Occupation {
 
     String getId();
 
     void setId(String id);
+
+    String getLocalType();
+
+    void setLocalType(String localType);
 
     Date getDate();
 
@@ -24,16 +28,16 @@ public interface Function {
 
     void setDescriptiveNote(List<String> descriptiveNote);
 
-    List<Citation> getCitations();
+    PlaceEntry getPlaceEntry();
 
-    void setCitations(List<Citation> citations);
-
-    List<PlaceEntry> getPlaceEntry();
-
-    void setPlaceEntry(List<PlaceEntry> placeEntry);
+    void setPlaceEntry(PlaceEntry placeEntry);
 
     Term getTerm();
 
     void setTerm(Term term);
+
+    List<Citation> getCitations();
+
+    void setCitations(List<Citation> citations);
 
 }

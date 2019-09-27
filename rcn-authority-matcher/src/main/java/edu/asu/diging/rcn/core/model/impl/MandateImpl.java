@@ -4,31 +4,33 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import edu.asu.diging.rcn.core.model.Citation;
 import edu.asu.diging.rcn.core.model.Date;
 import edu.asu.diging.rcn.core.model.DateRange;
 import edu.asu.diging.rcn.core.model.DateSet;
-import edu.asu.diging.rcn.core.model.Function;
+import edu.asu.diging.rcn.core.model.Mandate;
 import edu.asu.diging.rcn.core.model.PlaceEntry;
 import edu.asu.diging.rcn.core.model.Term;
 
-public class FunctionImpl implements Function {
+@Entity
+public class MandateImpl implements Mandate {
 
     @Id
-    @GeneratedValue(generator = "func_id_generator")
-    @GenericGenerator(name = "func_id_generator",    
-                    parameters = @Parameter(name = "prefix", value = "FU"), 
+    @GeneratedValue(generator = "mandate_id_generator")
+    @GenericGenerator(name = "mandate_id_generator",    
+                    parameters = @Parameter(name = "prefix", value = "MA"), 
                     strategy = "edu.asu.diging.rcn.core.data.IdGenerator"
             )
     private String id;
+    
+    private String localType;
     
     @OneToOne(targetEntity=DateImpl.class, cascade=CascadeType.ALL, orphanRemoval=true)
     private Date date;
@@ -42,17 +44,14 @@ public class FunctionImpl implements Function {
     @ElementCollection
     private List<String> descriptiveNote;
     
-    @OneToMany(targetEntity=CitationImpl.class, cascade=CascadeType.ALL, orphanRemoval=true)
-    private List<Citation> citations;
-    
-    @OneToMany(targetEntity=PlaceEntryImpl.class, cascade=CascadeType.ALL, orphanRemoval=true)
-    private List<PlaceEntry> placeEntries;
+    @OneToOne(targetEntity=PlaceEntryImpl.class, cascade=CascadeType.ALL, orphanRemoval=true)
+    private PlaceEntry placeEntry;
     
     @OneToOne(targetEntity=TermImpl.class, cascade=CascadeType.ALL, orphanRemoval=true)
     private Term term;
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getId()
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getId()
      */
     @Override
     public String getId() {
@@ -60,7 +59,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setId(java.lang.String)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setId(java.lang.String)
      */
     @Override
     public void setId(String id) {
@@ -68,7 +67,23 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getDate()
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getLocalType()
+     */
+    @Override
+    public String getLocalType() {
+        return localType;
+    }
+
+    /* (non-Javadoc)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setLocalType(java.lang.String)
+     */
+    @Override
+    public void setLocalType(String localType) {
+        this.localType = localType;
+    }
+
+    /* (non-Javadoc)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getDate()
      */
     @Override
     public Date getDate() {
@@ -76,7 +91,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setDate(edu.asu.diging.rcn.core.model.Date)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setDate(edu.asu.diging.rcn.core.model.Date)
      */
     @Override
     public void setDate(Date date) {
@@ -84,7 +99,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getDateRange()
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getDateRange()
      */
     @Override
     public DateRange getDateRange() {
@@ -92,7 +107,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setDateRange(edu.asu.diging.rcn.core.model.DateRange)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setDateRange(edu.asu.diging.rcn.core.model.DateRange)
      */
     @Override
     public void setDateRange(DateRange dateRange) {
@@ -100,7 +115,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getDateSet()
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getDateSet()
      */
     @Override
     public DateSet getDateSet() {
@@ -108,7 +123,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setDateSet(edu.asu.diging.rcn.core.model.DateSet)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setDateSet(edu.asu.diging.rcn.core.model.DateSet)
      */
     @Override
     public void setDateSet(DateSet dateSet) {
@@ -116,7 +131,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getDescriptiveNote()
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getDescriptiveNote()
      */
     @Override
     public List<String> getDescriptiveNote() {
@@ -124,7 +139,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setDescriptiveNote(java.util.List)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setDescriptiveNote(java.util.List)
      */
     @Override
     public void setDescriptiveNote(List<String> descriptiveNote) {
@@ -132,39 +147,23 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getCitations()
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getPlaceEntry()
      */
     @Override
-    public List<Citation> getCitations() {
-        return citations;
+    public PlaceEntry getPlaceEntry() {
+        return placeEntry;
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setCitations(java.util.List)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setPlaceEntry(edu.asu.diging.rcn.core.model.PlaceEntry)
      */
     @Override
-    public void setCitations(List<Citation> citations) {
-        this.citations = citations;
+    public void setPlaceEntry(PlaceEntry placeEntry) {
+        this.placeEntry = placeEntry;
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getPlaceEntry()
-     */
-    @Override
-    public List<PlaceEntry> getPlaceEntry() {
-        return placeEntries;
-    }
-
-    /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setPlaceEntry(edu.asu.diging.rcn.core.model.PlaceEntry)
-     */
-    @Override
-    public void setPlaceEntry(List<PlaceEntry> placeEntries) {
-        this.placeEntries = placeEntries;
-    }
-
-    /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#getTerm()
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#getTerm()
      */
     @Override
     public Term getTerm() {
@@ -172,7 +171,7 @@ public class FunctionImpl implements Function {
     }
 
     /* (non-Javadoc)
-     * @see edu.asu.diging.rcn.core.model.impl.Function#setTerm(edu.asu.diging.rcn.core.model.Term)
+     * @see edu.asu.diging.rcn.core.model.impl.Mandate#setTerm(edu.asu.diging.rcn.core.model.Term)
      */
     @Override
     public void setTerm(Term term) {
