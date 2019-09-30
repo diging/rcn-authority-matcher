@@ -14,7 +14,8 @@
 		<spring-security-version>5.1.4.RELEASE</spring-security-version>
 		<spring-data.version>Lovelace-RELEASE</spring-data.version>
 		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-
+		<spring.kafka.version>2.2.8.RELEASE</spring.kafka.version>
+		
 		<admin.password>$2a$04$oQo44vqcDIFRoYKiAXoNheurzkwX9dcNmowvTX/hsWuBMwijqn44i</admin.password>
 		
 		<db.driver>com.mysql.jdbc.Driver</db.driver>
@@ -22,6 +23,7 @@
         <db.user></db.user>
         <db.password></db.password>
 
+		<kafka.hosts>localhost:9092</kafka.hosts>
 		<log.level>debug</log.level>
 	</properties>
 
@@ -219,6 +221,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring.kafka.version}</version>
+        </dependency>
 
 	</dependencies>
 
