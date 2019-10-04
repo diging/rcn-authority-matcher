@@ -34,7 +34,6 @@ import edu.asu.diging.oauth.tokens.core.data.OAuthClientRepository;
 import edu.asu.diging.oauth.tokens.core.service.IOAuthClientManager;
 import edu.asu.diging.oauth.tokens.core.service.impl.OAuthClientManager;
 
-@Configuration
 @EnableWebSecurity
 public class SecurityContext extends WebSecurityConfigurerAdapter {
     
@@ -53,9 +52,6 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 
         @Value("${_oauth_token_validity}")
         private int oauthTokenValidity;
-
-        @Autowired
-        private TokenStore tokenStore;
 
         @Autowired
         private AuthenticationManager authenticationManager;
@@ -97,7 +93,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
                     .pathMapping("/oauth/check_token", "/api/v1/oauth/check_token")
                     .pathMapping("/oauth/confirm_access", "/api/v1/oauth/confirm_access")
                     .pathMapping("/oauth/error", "/api/v1/oauth/error")
-                    .pathMapping("/oauth/token", "/api/v1/oauth/token").tokenStore(tokenStore)
+                    .pathMapping("/oauth/token", "/api/v1/oauth/token").tokenStore(tokenStore())
                     .authenticationManager(authenticationManager);
         }
 
@@ -138,6 +134,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
         public AuthenticationFailureHandler customAuthenticationFailureHandler(String defaultFailureUrl) {
             return new CustomAuthenticationFailureHandler(defaultFailureUrl);
         }
+        
     }
 
     @Configuration
@@ -146,10 +143,13 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
     public static class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
 
         private static final String RESOURCE_ID = "my_rest_api";
+        
+        @Autowired
+        private TokenStore tokenStore;
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
-            resources.resourceId(RESOURCE_ID).stateless(false);
+            resources.tokenStore(tokenStore).resourceId(RESOURCE_ID).stateless(false);
         }
 
         @Override

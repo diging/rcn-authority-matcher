@@ -7,11 +7,9 @@
 
 <h2>Add App</h2>
 
-<span th:text="${clientId}"></span>: <span th:text="${secret}"/>
+<span th:text="${clientId}" th:remove="tag"></span>: <span th:text="${secret}" th:remove="tag"></span>
 
 <form action="#" th:action="@{/admin/apps/add}" method="POST" th:object="${appForm}">
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	
 	<label>App Name: </label>
 	<input th:field="*{name}" class="form-control input-sm"></input>
 	<p class="text-danger"><th:errors path="name"/></p>
