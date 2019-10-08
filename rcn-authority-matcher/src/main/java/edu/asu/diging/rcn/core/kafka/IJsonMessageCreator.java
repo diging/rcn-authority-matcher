@@ -1,0 +1,8 @@
+package edu.asu.diging.rcn.core.kafka;
+import edu.asu.diging.rcn.core.exceptions.MessageCreationException;
+import edu.asu.diging.rcn.kafka.messages.model.KafkaJobMessage;
+
+public interface IJsonMessageCreator {
+
+    public String createMessage(KafkaJobMessage ms) throws MessageCreationException;
+}

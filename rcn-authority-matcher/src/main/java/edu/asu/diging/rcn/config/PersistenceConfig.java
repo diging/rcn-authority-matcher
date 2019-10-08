@@ -25,7 +25,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @PropertySource("classpath:config.properties")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = { "edu.asu.diging.rcn.core.data", "edu.asu.diging.simpleusers.core.data", "edu.asu.diging.oauth.tokens.core.data" })
+@EnableJpaRepositories(basePackages = { "edu.asu.diging.rcn.core.data", "edu.asu.diging.simpleusers.core.data", "edu.asu.diging.oauth.tokens.core.data", "edu.asu.diging.eaccpf.data" })
 public class PersistenceConfig {
 
     @Autowired
@@ -46,7 +46,7 @@ public class PersistenceConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "edu.asu.diging.rcn.core.model", "edu.asu.diging.simpleusers.core.model", "edu.asu.diging.oauth.tokens.core.model" });
+        em.setPackagesToScan(new String[] { "edu.asu.diging.rcn.core.model", "edu.asu.diging.simpleusers.core.model", "edu.asu.diging.oauth.tokens.core.model", "edu.asu.diging.eaccpf.model" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
