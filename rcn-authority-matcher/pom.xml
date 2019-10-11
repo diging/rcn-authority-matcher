@@ -64,6 +64,11 @@
 			<artifactId>rcn-kafka-messages</artifactId>
 			<version>0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>edu.asu.diging</groupId>
+			<artifactId>simple-users</artifactId>
+			<version>0.6-SNAPSHOT</version>
+		</dependency>
 
 		<!-- Spring -->
 		<dependency>
@@ -137,11 +142,6 @@
 			<version>1.8.9</version>
 		</dependency>
 
-		<dependency>
-			<groupId>edu.asu.diging</groupId>
-			<artifactId>simple-users</artifactId>
-			<version>0.5</version>
-		</dependency>
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

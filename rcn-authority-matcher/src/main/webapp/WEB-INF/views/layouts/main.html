@@ -46,6 +46,10 @@
 	          		<a th:href="@{/}" >Home</a>
 	          	</li>
 	          	
+	          	<li sec:authorize="hasAnyRole('USER', 'ADMIN')" role="presentation">
+	          		<a th:href="@{/auth/datasets}" >Datasets</a>
+	          	</li>
+	          	
 	          	<li sec:authorize="hasRole('ADMIN')" role="presentation">
 	          		<a th:href="@{/admin/user/list}" >Users</a>
 	          	</li>
