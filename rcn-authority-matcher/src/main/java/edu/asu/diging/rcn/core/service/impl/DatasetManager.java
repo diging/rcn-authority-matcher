@@ -1,8 +1,8 @@
 package edu.asu.diging.rcn.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -30,6 +30,26 @@ public class DatasetManager implements IDatasetManager {
         dataset.setTitle(title);
         dataset.setDescription(description);
         return datasetRepo.save(dataset);
+    }
+    
+    @Override
+    public Dataset get(String id) {
+        Optional<DatasetImpl> dsOptional = datasetRepo.findById(id);
+        if (!dsOptional.isPresent()) {
+            return null;
+        }
+        return dsOptional.get();
+    }
+    
+    @Override
+    public Dataset getLoaded(String id) {
+        Optional<DatasetImpl> dsOptional = datasetRepo.findById(id);
+        if (!dsOptional.isPresent()) {
+            return null;
+        }
+        Dataset dataset = dsOptional.get();
+        dataset.getRecords().size();
+        return dataset;
     }
     
     @Override

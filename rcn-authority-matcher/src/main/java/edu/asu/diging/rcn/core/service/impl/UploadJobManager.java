@@ -26,6 +26,7 @@ import edu.asu.diging.eaccpf.data.DatasetRepository;
 import edu.asu.diging.eaccpf.model.Dataset;
 import edu.asu.diging.eaccpf.model.impl.DatasetImpl;
 import edu.asu.diging.rcn.core.data.UploadJobRepository;
+import edu.asu.diging.rcn.core.exceptions.DatasetNotFoundException;
 import edu.asu.diging.rcn.core.exceptions.FileStorageException;
 import edu.asu.diging.rcn.core.exceptions.MessageCreationException;
 import edu.asu.diging.rcn.core.kafka.IKafkaRequestProducer;
@@ -92,8 +93,15 @@ public class UploadJobManager implements IUploadJobManager {
     }
 
     @Override
-    public IUploadJob createUploadJob(IUser user, MultipartFile file, byte[] fileBytes) {
+    public IUploadJob createUploadJob(IUser user, String datasetId, MultipartFile file, byte[] fileBytes) throws DatasetNotFoundException {
 
+        Optional<DatasetImpl> datasetOptional = datasetRepository.findById(datasetId);
+        if (!datasetOptional.isPresent()) {
+            throw new DatasetNotFoundException("Could not find dataset with id: " + datasetId);
+        }
+        
+        Dataset dataset = datasetOptional.get();
+        
         String filename = file.getOriginalFilename();
 
         UploadJob job = new UploadJob();
@@ -129,13 +137,12 @@ public class UploadJobManager implements IUploadJobManager {
         job.setContentType(contentType);
         job.setFileSize(file.getSize());
         
-        Dataset dataset = new DatasetImpl();
-        dataset = datasetRepository.save((DatasetImpl)dataset);
+        
         job.setDatasetId(dataset.getId());
-        jobRepository.save(job);
+        job = jobRepository.save(job);
         
         try {
-            kafkaProducer.sendRequest(new KafkaJobMessage(dataset.getId()), KafkaTopics.UPLOAD_DATASET_TOPIC);
+            kafkaProducer.sendRequest(new KafkaJobMessage(dataset.getId(), job.getId()), KafkaTopics.UPLOAD_DATASET_TOPIC);
         } catch (MessageCreationException e) {
             logger.error("Could not send Kafka message.", e);
             job.setStatus(JobStatus.FAILURE);

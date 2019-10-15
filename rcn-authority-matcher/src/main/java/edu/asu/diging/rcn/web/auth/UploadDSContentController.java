@@ -21,7 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import edu.asu.diging.rcn.core.exceptions.DatasetNotFoundException;
 import edu.asu.diging.rcn.core.model.IUploadJob;
+import edu.asu.diging.rcn.core.model.JobStatus;
+import edu.asu.diging.rcn.core.model.impl.UploadJob;
 import edu.asu.diging.rcn.core.service.IDatasetManager;
 import edu.asu.diging.rcn.core.service.IUploadJobManager;
 import edu.asu.diging.simpleusers.core.model.IUser;
@@ -61,7 +64,14 @@ public class UploadDSContentController {
         
         List<IUploadJob> jobs = new ArrayList<>();
         for (int i = 0; i<files.length; i++) {
-            jobs.add(jobManager.createUploadJob(user, files[i], fileBytes.get(i)));
+            try {
+                jobs.add(jobManager.createUploadJob(user, dataset, files[i], fileBytes.get(i)));
+            } catch (DatasetNotFoundException e) {
+                logger.error("Could not create upload job.", e);
+                IUploadJob job = new UploadJob();
+                job.setStatus(JobStatus.FAILURE);
+                jobs.add(job);
+            }
         }
         
         ObjectMapper mapper = new ObjectMapper();

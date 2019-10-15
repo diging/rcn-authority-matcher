@@ -10,4 +10,8 @@ public interface IDatasetManager {
 
     List<Dataset> list();
 
+    Dataset get(String id);
+
+    Dataset getLoaded(String id);
+
 }
