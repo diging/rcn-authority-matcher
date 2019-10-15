@@ -11,7 +11,7 @@ public interface IUploadJobManager {
 
     IUploadJob findUploadJob(String id);
 
-    List<IUploadJob> createUploadJob(IUser user, MultipartFile file, byte[] fileBytes);
+    IUploadJob createUploadJob(IUser user, MultipartFile file, byte[] fileBytes);
 
     byte[] getUploadedFile(IUploadJob job);
 

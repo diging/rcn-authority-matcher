@@ -92,16 +92,11 @@ public class UploadJobManager implements IUploadJobManager {
     }
 
     @Override
-    public List<IUploadJob> createUploadJob(IUser user, MultipartFile file, byte[] fileBytes) {
-
-        List<IUploadJob> jobs = new ArrayList<>();
-        int i = 0;
+    public IUploadJob createUploadJob(IUser user, MultipartFile file, byte[] fileBytes) {
 
         String filename = file.getOriginalFilename();
 
-        byte[] bytes = null;
         UploadJob job = new UploadJob();
-        jobs.add(job);
         job.setFilename(filename);
         job.setCreatedOn(OffsetDateTime.now());
         job.setUsername(user.getUsername());
@@ -112,12 +107,12 @@ public class UploadJobManager implements IUploadJobManager {
             if (fileBytes == null) {
                 job.setStatus(JobStatus.FAILURE);
                 job.getPhases().add(new JobPhase(JobStatus.FAILURE, "There is not file content."));
-                Tika tika = new Tika();
-                contentType = tika.detect(bytes);
             } else {
                 job = jobRepository.save(job);
-                fileManager.saveFile(user.getUsername(), job.getId(), filename, bytes);
+                fileManager.saveFile(user.getUsername(), job.getId(), filename, fileBytes);
                 job.setStatus(JobStatus.PREPARED);
+                Tika tika = new Tika();
+                contentType = tika.detect(fileBytes);
             }
         } catch (FileStorageException e) {
             logger.error("Could not store file.", e);
@@ -148,7 +143,7 @@ public class UploadJobManager implements IUploadJobManager {
             jobRepository.save(job);
         }
 
-        return jobs;
+        return job;
     }
 
     @Override
