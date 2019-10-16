@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.asu.diging.eaccpf.data.DatasetRepository;
+import edu.asu.diging.eaccpf.data.RecordRepository;
 import edu.asu.diging.eaccpf.model.Dataset;
+import edu.asu.diging.eaccpf.model.Record;
 import edu.asu.diging.eaccpf.model.impl.DatasetImpl;
 import edu.asu.diging.rcn.core.service.IDatasetManager;
 
@@ -20,7 +22,7 @@ public class DatasetManager implements IDatasetManager {
 
     @Autowired
     private DatasetRepository datasetRepo;
-    
+     
     /* (non-Javadoc)
      * @see edu.asu.diging.rcn.core.service.impl.IDatasetManager#createDataset(java.lang.String, java.lang.String)
      */
@@ -48,7 +50,9 @@ public class DatasetManager implements IDatasetManager {
             return null;
         }
         Dataset dataset = dsOptional.get();
-        dataset.getRecords().size();
+        for (Record rd : dataset.getRecords()) {
+            rd.getConventionDeclarations().size();
+        }
         return dataset;
     }
     

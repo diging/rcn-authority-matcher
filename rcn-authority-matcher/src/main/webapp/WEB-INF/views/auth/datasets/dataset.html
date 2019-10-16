@@ -9,12 +9,30 @@
 
 
 <table class="table table-striped">
+	<tr>
+		<th>Record Id</th>
+		<th>Other Record Id</th>
+		<th>Maintenance Status</th>
+		<th>Publication Status</th>
+		<th>Citation</th>
+	</tr>
 	<tr th:each="record : ${dataset.records}">
 		<td>
-		<span th:text="${record.recordId}" th:remove="tag"></span>
+		<a th:href="@{'/auth/datasets/' + ${dataset.id} + '/record/' + ${record.id}}" th:text="${record.recordId}" ></a>
+		</td>
+		<td>
+		<span th:text="${record.otherRecordId}" th:remove="tag"></span>
 		</td>
 		<td>
 		<span th:text="${record.maintenanceStatus}" th:remove="tag"></span>
+		</td>
+		<td>
+		<span th:text="${record.publicationStatus}" th:remove="tag"></span>
+		</td>
+		<td>
+		<span th:each="cd : ${record.conventionDeclarations}">
+		<span th:text="${cd.citation}" th:remove="tag"></span>
+		</span>
 		</td>
 	</tr>
 </table>
