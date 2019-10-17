@@ -6,6 +6,118 @@
    <div layout:fragment="content">
 
 <h2>Record: <span th:text="${record.recordId}" th:remove="tag"></span></h2>
+
+<table class="table table-striped">
+	<tr class="warning">
+	<td colspan="2"><b>Identity Information</b></td>
+	</tr>
+	
+	<tr>
+	<td width="200px"><b>Local Type:</b></td>
+	<td th:text="${record.identity.localType}"></td>
+	</tr>
+	
+	<tr>
+	<td width="200px"><b>Identity Type:</b></td>
+	<td th:text="${record.identity.identityType}"></td>
+	</tr>
+	
+	<tr>
+	<td width="200px"><b>Entity Type:</b></td>
+	<td th:text="${record.identity.entityType}"></td>
+	</tr>
+	
+	<tr>
+	<td width="200px"><b>Entity Ids:</b></td>
+	<td >
+		<p th:each="entityId : ${record.identity.entityIds}">[[${entityId.entityId}]]
+		<span th:if="${entityId.localType != ''}">([[${entityId.localType}]])</span></p>
+	</td>
+	</tr>
+	
+	<tr>
+	<td><b>Descriptive Note:</b></td>
+	<td>
+		<p th:each="note : ${record.identity.descriptiveNote}" th:text="${note}"></p>
+	</td>
+	</tr>
+	
+	<tr class="warning">
+	<td colspan="2"><b>Name Entries</b></td>
+	</tr>
+	<tr th:each="nameEntry : ${record.identity.nameEntries}">
+	<td colspan="2">
+		<div class="col-sm-2">
+			<b>Local Type:</b>
+		</div>
+		<div class="col-sm-10">
+			[[${nameEntry.localType}]]
+			&nbsp;
+		</div>
+		<div class="col-sm-2">
+			<b>Script Code:</b>
+		</div>
+		<div class="col-sm-10">
+			[[${nameEntry.scriptCode}]]
+			&nbsp;
+		</div>
+		<div class="col-sm-2">
+			<b>Transliteration:</b>
+		</div>
+		<div class="col-sm-10">
+			[[${nameEntry.transliteration}]]
+			&nbsp;
+		</div>
+		<div class="col-sm-2">
+			<b>Alternative Forms:</b>
+		</div>
+		<div class="col-sm-10">
+		&nbsp;
+			<span th:each="form : ${nameEntry.alternativeForms}" th:remove="tag">[[${form}]]<br></span>			
+		</div>
+		<div class="col-sm-2">
+			<b>Authorized Forms:</b>
+		</div>
+		<div class="col-sm-10">
+			&nbsp;
+			<span th:each="form : ${nameEntry.authorizedForms}" th:remove="tag">[[${form}]]<br></span>		
+		</div>
+		<div class="col-sm-2">
+			<b>Preferred Forms:</b>
+		</div>
+		<div class="col-sm-10">
+		&nbsp;
+			<span th:each="form : ${nameEntry.preferredForms}" th:remove="tag">[[${form}]]<br></span>
+			
+		</div>
+		<div class="col-sm-2">
+			<b>Name Parts:</b>
+		</div>
+		<div class="col-sm-10">
+			<span th:each="part : ${nameEntry.parts}" th:remove="tag">[[${part.part}]] 
+			<span th:if="${part.localType != ''}" th:remove="tag">([[${part.localType}]])</span><br></span>
+			
+		</div>
+		<div class="col-sm-2">
+			<b>Use Dates:</b>
+		</div>
+		<div class="col-sm-10">
+			<span th:if="${nameEntry.useDates != null}">
+			<b>Dates:</b><br>
+			<span th:each="date : ${nameEntry.useDates.dates}" th:remove="tag">[[${date.date}]]<br></span> 
+			
+			<b>Date Ranges:</b><br>
+			<span th:each="date : ${nameEntry.useDates.dateRanges}" th:remove="tag">[[${date.fromDate}]] - [[${date.toDate}]]<br></span> 
+			</span>
+			
+			<!-- date sets are missing -->
+		</div>
+		
+	</td>
+	</tr>
+	<!-- name entry parallel still missing -->
+</table>
+
 <table class="table table-striped">
 	<tr class="warning">
 	<td colspan="2"><b>Control Information</b></td>
@@ -43,7 +155,7 @@
 			<b>Descriptive Note:</b>
 		</div>
 		<div class="col-sm-10">
-			<span th:each="note : ${decl.descriptiveNote}" th:remove="tag" th:text="note"></span>
+			<p th:each="note : ${decl.descriptiveNote}" th:text="${note}"></p>
 		</div>
 	</td>
 	</tr>
@@ -103,7 +215,7 @@
 			<b>Descriptive Note:</b>
 		</div>
 		<div class="col-sm-10">
-			<span th:each="note : ${decl.descriptiveNote}" th:remove="tag" th:text="note"></span>
+			<span th:each="note : ${decl.descriptiveNote}" th:remove="tag" th:text="${note}"></span>
 		</div>
 	</td>
 	</tr>
@@ -118,7 +230,8 @@
 			<b>Date:</b>
 		</div>
 		<div class="col-sm-10">
-			[[${control.date}]] &nbsp;
+			<p th:each="date : ${control.dates}" th:text="date"></p>
+			&nbsp;
 		</div>
 		<div class="col-sm-2">
 			<b>Term:</b>
@@ -156,7 +269,7 @@
 	<tr>
 	<td><b>Descriptive Note:</b></td>
 	<td>
-		<span th:each="note : ${record.maintenanceAgency.descriptiveNote}" th:remove="tag" th:text="note"></span>
+		<p th:each="note : ${record.maintenanceAgency.descriptiveNote}" th:text="${note}"></p>
 	</td>
 	</tr>
 	
@@ -209,7 +322,7 @@
 			<b>Descriptive Note:</b>
 		</div>
 		<div class="col-sm-10">
-			<span th:each="note : ${decl.descriptiveNote}" th:remove="tag" th:text="note"></span>
+			<p th:each="note : ${decl.descriptiveNote}" th:text="${note}"></p>
 		</div>
 		
 	</td>
@@ -237,7 +350,7 @@
 			<b>Descriptive Note:</b>
 		</div>
 		<div class="col-sm-10">
-			<span th:each="note : ${decl.descriptiveNote}" th:remove="tag" th:text="note"></span>
+			<p th:each="note : ${decl.descriptiveNote}" th:text="${note}"></p>
 		</div>
 		
 		<hr>

@@ -27,10 +27,35 @@ public class RecordManager implements IRecordManager {
         Optional<RecordImpl> recordOptional = recordRepo.findById(id);
         if (recordOptional.isPresent()) {
             Record record = recordOptional.get();
+            if(record.getIdentity() != null) {
+                record.getIdentity().getDescriptiveNote().size();
+                record.getIdentity().getEntityIds().size();
+                record.getIdentity().getNameEntries().forEach(n -> {
+                    if(n.getAlternativeForms() != null) {
+                        n.getAlternativeForms().size();
+                    }
+                    if(n.getAuthorizedForms() != null) {
+                        n.getAuthorizedForms().size();
+                    }
+                    if(n.getParts() != null) {
+                        n.getParts().size();
+                    }
+                    if(n.getPreferredForms() != null) {
+                        n.getPreferredForms().size();
+                    }
+                    if(n.getUseDates() != null) {
+                        n.getUseDates().getDates().size();
+                        n.getUseDates().getDateSets().size();
+                        n.getUseDates().getDateRanges().size();
+                    }
+                });
+                record.getIdentity().getNameEntriesParallel().size();
+            }
             record.getConventionDeclarations().forEach(c -> c.getDescriptiveNote().size());
             record.getLanguageDeclarations().size();
             record.getLocalTypeDeclarations().forEach(d -> d.getDescriptiveNote().size());
             record.getLocalControls().forEach(c -> c.getDateRanges().size());
+            record.getLocalControls().forEach(c -> c.getDates().size());
             record.getMaintenanceAgency().getDescriptiveNote().size();
             record.getMaintenanceEventHistory().forEach(e -> e.getEventDescription().size());
             record.getRightsDeclarations().forEach(d -> d.getDescriptiveNote().size());
