@@ -63,6 +63,14 @@ public class RecordManager implements IRecordManager {
                 s.getRelationEntries().size();
                 s.getDescriptiveNote().size();
             });
+            if (record.getDescription() != null) {
+                if (record.getDescription().getBiogHists() != null) {
+                    record.getDescription().getBiogHists().forEach(b -> {
+                        b.getCitations().size();
+                        b.getPs().size();
+                    });
+                }
+            }
             return record;
         }
         return null;

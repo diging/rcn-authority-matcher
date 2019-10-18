@@ -8,7 +8,7 @@
 <h2>Record: <span th:text="${record.recordId}" th:remove="tag"></span></h2>
 
 <table class="table table-striped">
-	<tr class="warning">
+	<tr class="info">
 	<td colspan="2"><b>Identity Information</b></td>
 	</tr>
 	
@@ -116,6 +116,38 @@
 	</td>
 	</tr>
 	<!-- name entry parallel still missing -->
+</table>
+
+<table class="table table-striped">
+	<tr class="info">
+	<td colspan="2"><b>Description</b></td>
+	</tr>
+	
+	<tr class="warning">
+	<td colspan="2"><b>Biographical History</b></td>
+	</tr>
+	
+	<tr>
+	<td width="200px"><b>Abstract:</b></td>
+	<td>
+		<p th:each="abs : ${record.description.biogHists}">
+		[[${abs.abstractText.text}]]
+		</p>
+	</td>
+	</tr>
+	
+	<tr>
+	<td width="200px"><b>Text:</b></td>
+	<td>
+		<span th:each="abs : ${record.description.biogHists}" th:remove="tag">
+		<p th:each="p : ${abs.ps}">
+		<span th:utext="${p}" th:remove="tag"></span>
+		</p>
+		</span>
+	</td>
+	</tr>
+	
+	
 </table>
 
 <table class="table table-striped">
