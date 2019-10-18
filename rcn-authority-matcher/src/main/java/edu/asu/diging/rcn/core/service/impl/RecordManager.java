@@ -70,7 +70,23 @@ public class RecordManager implements IRecordManager {
                         b.getPs().size();
                     });
                 }
+                
+                if (record.getDescription().getFunctionsElement() != null) {
+                    record.getDescription().getFunctionsElement().forEach(f -> {
+                        f.getCitations().size();
+                        f.getDescriptiveNote().size();
+                        f.getFunctions().size();
+                        f.getFunctions().forEach(fu -> {
+                            fu.getTerm().getText();
+                            fu.getDescriptiveNote().size();
+                        });
+                        f.getItemLists().size();
+                        f.getOutlines().size();
+                        f.getPs().size();
+                    });
+                }
             }
+            
             return record;
         }
         return null;

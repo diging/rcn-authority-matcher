@@ -146,16 +146,33 @@
 		</span>
 	</td>
 	</tr>
-	
-	
 </table>
 
 <table class="table table-striped">
-	<tr class="warning">
+	<tr class="info">
+	<td colspan="2"><b>Functions</b></td>
+	</tr>
+	<span th:each="funcs : ${record.description.functionsElement}" th:remove="tag">
+	<span th:each="func : ${funcs.functions}" th:remove="tag">
+	<tr class="success">
+	<td colspan="2"><b>[[${func.term.text}]]</b></td>
+	</tr>
+	<tr>
+	<td><b>Descriptive Note:</b></td>
+	<td>
+		<p th:each="note : ${func.descriptiveNote}" th:text="${note}"></p>
+	</td>
+	</tr>
+	</span>
+	</span>
+</table>
+
+<table class="table table-striped">
+	<tr class="info">
 	<td colspan="2"><b>Control Information</b></td>
 	</tr>
 	<tr>
-	<td width="200px"><b>Maintanence Status:</b></td>
+	<td width="200px"><b>Maintenance Status:</b></td>
 	<td th:text="${record.maintenanceStatus}"></td>
 	</tr>
 	<tr>
