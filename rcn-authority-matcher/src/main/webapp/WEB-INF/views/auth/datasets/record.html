@@ -146,6 +146,21 @@
 		</span>
 	</td>
 	</tr>
+	
+	<tr>
+	<td width="200px"><b>Exist Dates:</b></td>
+	<td>
+			<span th:if="${record.description.existDates != null}">
+			<b>Dates:</b><br>
+			<span th:each="date : ${record.description.existDates.dates}" th:remove="tag">[[${date.date}]]<br></span> 
+			
+			<b>Date Ranges:</b><br>
+			<span th:each="date : ${record.description.existDates.dateRanges}" th:remove="tag">[[${date.fromDate.date}]] - [[${date.toDate.date}]] <span class="text-warning">([[${date.fromDate.standardDate}]] - [[${date.toDate.standardDate}]])</span><br></span> 
+			</span>
+			
+			<!-- date sets are missing -->
+	</td>
+	</tr>
 </table>
 
 <table class="table table-striped">
@@ -163,6 +178,27 @@
 		<p th:each="note : ${func.descriptiveNote}" th:text="${note}"></p>
 	</td>
 	</tr>
+	</span>
+	</span>
+</table>
+
+<table class="table table-striped">
+	<tr class="info">
+	<td colspan="2"><b>Places</b></td>
+	</tr>
+	<span th:each="places : ${record.description.placeGroups}" th:remove="tag">
+	<span th:each="place : ${places.places}" th:remove="tag">
+	<tr>
+	<td><b>
+	<span th:each="role : ${place.placeRoles}" th:remove="tag">
+		[[${role.placeRole}]]<br>
+	</span>	
+	</b></td>
+	<td>
+	<span th:each="placeEntry : ${place.placeEntries}" th:remove="tag">
+	[[${placeEntry.text}]]
+	</span>
+	</td>
 	</span>
 	</span>
 </table>

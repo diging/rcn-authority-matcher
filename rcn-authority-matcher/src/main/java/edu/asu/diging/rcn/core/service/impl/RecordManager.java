@@ -71,6 +71,11 @@ public class RecordManager implements IRecordManager {
                     });
                 }
                 
+                if (record.getDescription().getExistDates() != null) {
+                    record.getDescription().getExistDates().getDates().size();
+                    record.getDescription().getExistDates().getDateRanges().size();
+                }
+                
                 if (record.getDescription().getFunctionsElement() != null) {
                     record.getDescription().getFunctionsElement().forEach(f -> {
                         f.getCitations().size();
@@ -83,6 +88,39 @@ public class RecordManager implements IRecordManager {
                         f.getItemLists().size();
                         f.getOutlines().size();
                         f.getPs().size();
+                    });
+                }
+                
+                if (record.getDescription().getPlaces() != null) {
+                    record.getDescription().getPlaces().forEach(p -> {
+                        p.getAddresses().size();
+                        p.getCitations().size();
+                        p.getDateRanges().size();
+                        p.getDates().size();
+                        p.getDateSets().size();
+                        p.getDescriptiveNote().size();
+                        p.getPlaceEntries().size();
+                        p.getPlaceRoles().size();
+                    });
+                }
+                
+                if (record.getDescription().getPlaceGroups() != null) {
+                    record.getDescription().getPlaceGroups().forEach(p -> {
+                        p.getCitations().size();
+                        p.getDescriptiveNote().size();
+                        p.getItemLists().size();
+                        p.getOutlines().size();
+                        p.getPlaces().forEach(pl -> {
+                            pl.getAddresses().size();
+                            pl.getCitations().size();
+                            pl.getDateRanges().size();
+                            pl.getDates().size();
+                            pl.getDateSets().size();
+                            pl.getDescriptiveNote().size();
+                            pl.getPlaceEntries().size();
+                            pl.getPlaceRoles().size();
+                        });
+                        p.getPs().size();
                     });
                 }
             }
