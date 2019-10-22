@@ -60,7 +60,7 @@ public class RecordManager implements IRecordManager {
             record.getMaintenanceEventHistory().forEach(e -> e.getEventDescription().size());
             record.getRightsDeclarations().forEach(d -> d.getDescriptiveNote().size());
             record.getSources().forEach(s -> {
-                s.getRelationEntries().size();
+                s.getSourceEntries().size();
                 s.getDescriptiveNote().size();
             });
             if (record.getDescription() != null) {
@@ -123,6 +123,35 @@ public class RecordManager implements IRecordManager {
                         p.getPs().size();
                     });
                 }
+            }
+            
+            if (record.getRelations() != null) {
+                record.getRelations().forEach(r -> {
+                    r.getCpfRelations().forEach(cr -> {
+                        cr.getDateRanges().size();
+                        cr.getDates().size();
+                        cr.getDateSets().size();
+                        cr.getDescriptiveNote().size();
+                        cr.getPlaceEntries().size();
+                        cr.getRelationEntries().size();
+                    });
+                    r.getFunctionRelations().forEach(f -> {
+                        f.getDateRanges().size();
+                        f.getDates().size();
+                        f.getDateSets().size();
+                        f.getDescriptiveNote().size();
+                        f.getPlaceEntries().size();
+                        f.getRelationEntries().size();
+                    });
+                    r.getResourceRelations().forEach(rr -> {
+                        rr.getDateRanges().size();
+                        rr.getDates().size();
+                        rr.getDateSets().size();
+                        rr.getDescriptiveNote().size();
+                        rr.getPlaceEntries().size();
+                        rr.getRelationEntries().size();
+                    });
+                });
             }
             
             return record;
