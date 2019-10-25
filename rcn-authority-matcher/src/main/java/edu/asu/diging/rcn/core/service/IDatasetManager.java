@@ -14,4 +14,6 @@ public interface IDatasetManager {
 
     Dataset getLoaded(String id);
 
+    void remove(String id);
+
 }

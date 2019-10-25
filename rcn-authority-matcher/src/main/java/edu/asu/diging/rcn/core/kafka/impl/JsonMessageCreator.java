@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.asu.diging.rcn.core.exceptions.MessageCreationException;
 import edu.asu.diging.rcn.core.kafka.IJsonMessageCreator;
-import edu.asu.diging.rcn.kafka.messages.model.KafkaJobMessage;
+import edu.asu.diging.rcn.kafka.messages.model.Message;
 
 @Component
 public class JsonMessageCreator implements IJsonMessageCreator {
@@ -16,7 +16,7 @@ public class JsonMessageCreator implements IJsonMessageCreator {
      * @see edu.asu.giles.service.kafka.impl.IJsonMessageCreator#createMessage(edu.asu.giles.service.requests.IRequest)
      */
     @Override
-    public String createMessage(KafkaJobMessage msg) throws MessageCreationException {
+    public String createMessage(Message msg) throws MessageCreationException {
         ObjectMapper mapper = new ObjectMapper(); 
         try {
             return mapper.writeValueAsString(msg);

@@ -5,7 +5,7 @@ import java.util.List;
 
 import edu.asu.diging.rcn.core.model.impl.JobPhase;
 
-public interface IUploadJob {
+public interface IUploadJob extends IJob {
 
     String getFilename();
 
@@ -34,10 +34,6 @@ public interface IUploadJob {
     void setUsername(String username);
 
     String getUsername();
-
-    void setId(String id);
-
-    String getId();
 
     void setDatasetId(String datasetId);
 

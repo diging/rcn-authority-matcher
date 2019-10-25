@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/resources/font-awesome-5.7.2/css/all.css}" type="text/css"  />
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">My awesome webapp</title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">RCN Authority Matcher</title>
     
     <!-- Bootstrap core CSS -->
     <link th:href="@{/resources/bootstrap/css/bootstrap.min.css}" type="text/css" rel="stylesheet">
@@ -51,6 +51,10 @@
 	          	</li>
 	          	
 	          	<li sec:authorize="hasAnyRole('USER', 'ADMIN')" role="presentation">
+	          		<a th:href="@{/auth/datasets/match}" >Match</a>
+	          	</li>
+	          	
+	          	<li sec:authorize="hasAnyRole('USER', 'ADMIN')" role="presentation">
 	          		<a th:href="@{/auth/dscontent/upload}" >Upload</a>
 	          	</li>
 	          	
@@ -84,7 +88,7 @@
 	    </div>
       
       
-	    <div th:if="${show_alert}" class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
+	    <div th:if="${show_alert}" class="alert alert-[[${alert_type}]]" role="alert">[[${alert_msg}]]</div>
 		
 	    <!-- Content -->
 	    <div layout:fragment="content">

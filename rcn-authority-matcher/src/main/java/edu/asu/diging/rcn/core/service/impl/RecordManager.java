@@ -1,5 +1,6 @@
 package edu.asu.diging.rcn.core.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -157,5 +158,10 @@ public class RecordManager implements IRecordManager {
             return record;
         }
         return null;
+    }
+    
+    @Override
+    public void delete(List<Record> records) {
+        recordRepo.deleteAll((List<RecordImpl>)(List<?>)records);
     }
 }

@@ -18,7 +18,7 @@ import edu.asu.diging.rcn.config.KafkaConfig;
 import edu.asu.diging.rcn.core.exceptions.MessageCreationException;
 import edu.asu.diging.rcn.core.kafka.IJsonMessageCreator;
 import edu.asu.diging.rcn.core.kafka.IKafkaRequestProducer;
-import edu.asu.diging.rcn.kafka.messages.model.KafkaJobMessage;
+import edu.asu.diging.rcn.kafka.messages.model.Message;
 
 @Service
 public class KafkaRequestProducer implements IKafkaRequestProducer {
@@ -71,7 +71,7 @@ public class KafkaRequestProducer implements IKafkaRequestProducer {
      * edu.asu.diging.citesphere.core.model.jobs.impl.Job, java.lang.String)
      */
     @Override
-    public void sendRequest(KafkaJobMessage msg, String topic) throws MessageCreationException {
+    public void sendRequest(Message msg, String topic) throws MessageCreationException {
         template.send(topic, messageCreator.createMessage(msg));
     }
 }

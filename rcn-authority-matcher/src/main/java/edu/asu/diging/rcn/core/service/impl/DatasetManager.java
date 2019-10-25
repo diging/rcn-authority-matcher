@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.asu.diging.eaccpf.data.DatasetRepository;
-import edu.asu.diging.eaccpf.data.RecordRepository;
 import edu.asu.diging.eaccpf.model.Dataset;
 import edu.asu.diging.eaccpf.model.Record;
 import edu.asu.diging.eaccpf.model.impl.DatasetImpl;
 import edu.asu.diging.rcn.core.service.IDatasetManager;
+import edu.asu.diging.rcn.core.service.IRecordManager;
 
 @Service
 @Transactional
@@ -22,6 +22,9 @@ public class DatasetManager implements IDatasetManager {
 
     @Autowired
     private DatasetRepository datasetRepo;
+    
+    @Autowired
+    private IRecordManager recordManager;
      
     /* (non-Javadoc)
      * @see edu.asu.diging.rcn.core.service.impl.IDatasetManager#createDataset(java.lang.String, java.lang.String)
@@ -32,6 +35,15 @@ public class DatasetManager implements IDatasetManager {
         dataset.setTitle(title);
         dataset.setDescription(description);
         return datasetRepo.save(dataset);
+    }
+    
+    @Override
+    public void remove(String id) {
+        Dataset dataset = get(id);
+        if (dataset != null) {
+            List<Record> records = dataset.getRecords();
+            recordManager.delete(records);
+        }
     }
     
     @Override
