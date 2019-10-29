@@ -3,6 +3,7 @@ package edu.asu.diging.rcn.core.model;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import edu.asu.diging.eaccpf.model.Dataset;
 import edu.asu.diging.rcn.core.model.impl.JobPhase;
 
 public interface IMatchingJob extends IJob {
@@ -30,5 +31,9 @@ public interface IMatchingJob extends IJob {
     String getCompareDatasetId();
 
     void setCompareDatasetId(String compareDatasetId);
+
+    Dataset getCompareDataset();
+
+    void setCompareDataset(Dataset compareDataset);
 
 }

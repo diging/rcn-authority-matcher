@@ -1,0 +1,46 @@
+<html layout:decorate="~{layouts/main}">
+  <head>
+    <title>Authority Matcher</title>
+  </head>
+  <body>
+   <div layout:fragment="content">
+
+<h2>Matches for [[${dataset.title}]] </h2>
+
+<script>
+//# sourceURL=pagination.js
+$(function() {
+	var pageUrl="[[@{'/auth/datasets/' + ${dataset.id} + '/jobs/matching/' + ${job.id}}]]";
+	
+	$('#pagination-records').twbsPagination({
+        totalPages: [[${totalPages}]],
+        visiblePages: 10,
+        startPage: [[${currentPage}]],
+        initiateStartPageClick: false,
+        onPageClick: function (event, page) {
+        	if (page != [[${currentPage}]]) {
+        		window.location.href = pageUrl + "?page=" + page
+        	}
+        }
+    });
+});
+</script>
+<p>
+<ul id="pagination-records" class="pagination-sm"></ul>
+</p>
+
+<p>
+[[${totalResults}]] records matched.
+</p>
+
+<ul class="list-group">
+	<li th:each="match : ${matches}" class="list-group-item clearfix" th:classappend="${(match.match.overallScore > 0.2 ? 'list-group-item-success' : '') + (match.match.overallScore < 0.2 && match.match.overallScore > 0.1 ? 'list-group-item-warning' : '')} |">
+	
+		[[${match.baseRecord.names[0]}]] <span class="text-warning">has been matched to</span> [[${match.matchedRecord.names[0]}]] <span class="text-warning">with a score of</span> [[${match.match.overallScore}]]
+		
+	</li>
+</ul>
+
+   </div>
+  </body>
+</html>

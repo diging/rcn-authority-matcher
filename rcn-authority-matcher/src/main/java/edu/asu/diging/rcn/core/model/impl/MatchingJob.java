@@ -10,12 +10,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import edu.asu.diging.eaccpf.model.Dataset;
 import edu.asu.diging.rcn.core.model.IMatchingJob;
 import edu.asu.diging.rcn.core.model.JobStatus;
 
@@ -41,8 +43,9 @@ public class MatchingJob implements IMatchingJob {
     private String baseDatasetId;
     private String compareDatasetId;
 
+    @Transient
+    private Dataset compareDataset;
 
-    
     /* (non-Javadoc)
      * @see edu.asu.diging.rcn.core.model.impl.IMatchingJob#getId()
      */
@@ -162,6 +165,17 @@ public class MatchingJob implements IMatchingJob {
     @Override
     public void setCompareDatasetId(String compareDatasetId) {
         this.compareDatasetId = compareDatasetId;
+    }
+
+    @Override
+    public Dataset getCompareDataset() {
+        return compareDataset;
+    }
+
+
+    @Override
+    public void setCompareDataset(Dataset compareDataset) {
+        this.compareDataset = compareDataset;
     }
 
 }

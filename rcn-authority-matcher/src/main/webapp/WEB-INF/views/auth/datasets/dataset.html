@@ -7,6 +7,10 @@
 
 <h2>Dataset: <span th:text="${dataset.title}" th:remove="tag"></span></h2>
 
+<p>
+<a th:href="@{'/auth/datasets/' + ${dataset.id} + '/jobs/matching'}">See found matches</a>
+</p>
+
 <script>
 //# sourceURL=pagination.js
 $(function() {
