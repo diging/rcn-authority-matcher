@@ -1,5 +1,7 @@
 package edu.asu.diging.rcn.web.auth;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +24,8 @@ public class DatasetAddController {
     }
     
     @RequestMapping(value="/auth/datasets/add", method=RequestMethod.POST)
-    public String post(DatasetForm form) {
-        datasetManager.create(form.getName(), form.getDescription());
+    public String post(DatasetForm form, Principal principal) {
+        datasetManager.create(form.getName(), form.getDescription(), principal.getName());
         return "redirect:/auth/datasets";
     }
 }

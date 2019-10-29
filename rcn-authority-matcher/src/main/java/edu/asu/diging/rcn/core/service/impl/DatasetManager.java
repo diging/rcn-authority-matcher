@@ -1,5 +1,6 @@
 package edu.asu.diging.rcn.core.service.impl;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import edu.asu.diging.eaccpf.data.DatasetRepository;
@@ -30,10 +32,12 @@ public class DatasetManager implements IDatasetManager {
      * @see edu.asu.diging.rcn.core.service.impl.IDatasetManager#createDataset(java.lang.String, java.lang.String)
      */
     @Override
-    public Dataset create(String title, String description) {
+    public Dataset create(String title, String description, String creator) {
         DatasetImpl dataset = new DatasetImpl();
         dataset.setTitle(title);
         dataset.setDescription(description);
+        dataset.setCreator(creator);
+        dataset.setCreationDate(OffsetDateTime.now());
         return datasetRepo.save(dataset);
     }
     
@@ -72,6 +76,13 @@ public class DatasetManager implements IDatasetManager {
     public List<Dataset> list() {
         List<Dataset> datasets = new ArrayList<Dataset>();
         datasetRepo.findAll().forEach(datasets::add);
+        return datasets;
+    }
+    
+    @Override
+    public List<Dataset> list(String username, Pageable pagable) {
+        List<Dataset> datasets = new ArrayList<Dataset>();
+        datasetRepo.findByCreator(username, pagable).forEach(datasets::add);
         return datasets;
     }
 }

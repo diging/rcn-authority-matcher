@@ -1,11 +1,13 @@
 package edu.asu.diging.rcn.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import edu.asu.diging.eaccpf.data.RecordRepository;
@@ -163,5 +165,17 @@ public class RecordManager implements IRecordManager {
     @Override
     public void delete(List<Record> records) {
         recordRepo.deleteAll((List<RecordImpl>)(List<?>)records);
+    }
+    
+    @Override
+    public List<Record> listRecords(String datasetId, Pageable pageable) {
+        List<Record> records = new ArrayList<Record>();
+        recordRepo.getByDatasetPageable(datasetId, pageable).forEach(records::add);
+        return records;
+    }
+    
+    @Override
+    public long getRecordCount(String datasetId) {
+        return recordRepo.countByDatasetId(datasetId);
     }
 }

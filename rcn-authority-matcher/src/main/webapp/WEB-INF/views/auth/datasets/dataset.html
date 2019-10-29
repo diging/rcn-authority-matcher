@@ -7,6 +7,25 @@
 
 <h2>Dataset: <span th:text="${dataset.title}" th:remove="tag"></span></h2>
 
+<script>
+//# sourceURL=pagination.js
+$(function() {
+	var pageUrl="[[@{'/auth/datasets/' + ${dataset.id}}]]";
+	
+	$('#pagination-records').twbsPagination({
+        totalPages: [[${recordCount}]],
+        visiblePages: 10,
+        startPage: [[${currentPage}]],
+        initiateStartPageClick: false,
+        onPageClick: function (event, page) {
+        	if (page != [[${currentPage}]]) {
+        		window.location.href = pageUrl + "?page=" + page
+        	}
+        }
+    });
+});
+</script>
+<ul id="pagination-records" class="pagination-sm"></ul>
 
 <table class="table table-striped">
 	<tr>
@@ -16,7 +35,7 @@
 		<th>Publication Status</th>
 		<th>Citation</th>
 	</tr>
-	<tr th:each="record : ${dataset.records}">
+	<tr th:each="record : ${records}">
 		<td>
 		<a th:href="@{'/auth/datasets/' + ${dataset.id} + '/record/' + ${record.id}}" th:text="${record.recordId}" ></a>
 		</td>
@@ -30,9 +49,7 @@
 		<span th:text="${record.publicationStatus}" th:remove="tag"></span>
 		</td>
 		<td>
-		<span th:each="cd : ${record.conventionDeclarations}">
-		<span th:text="${cd.citation}" th:remove="tag"></span>
-		</span>
+		
 		</td>
 	</tr>
 </table>
