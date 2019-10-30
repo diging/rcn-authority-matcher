@@ -29,10 +29,10 @@ public class MatchListController {
         model.addAttribute("matches", matchManager.list(jobId, pageable));
         model.addAttribute("totalPages", (int) Math.ceil(matchManager.getTotalMatches(jobId)/new Float(pageable.getPageSize())));
         model.addAttribute("totalResults", matchManager.getTotalMatches(jobId));
-        model.addAttribute("currentPage", pageable.getPageNumber());
+        model.addAttribute("currentPage", pageable.getPageNumber()+1);
         model.addAttribute("dataset", datasetManager.get(datasetId));
         IMatchingJob job = jobManager.get(jobId);
-        model.addAttribute("compareTo", job.getCompareDataset());
+        model.addAttribute("compareTo", datasetManager.get(job.getCompareDatasetId()));
         model.addAttribute("job", job);
         return "/auth/datasets/jobs/job";
     }

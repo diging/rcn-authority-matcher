@@ -104,7 +104,7 @@
 		<div class="col-sm-10">
 			<span th:if="${nameEntry.useDates != null}">
 			<b>Dates:</b><br>
-			<span th:each="date : ${nameEntry.useDates.dates}" th:remove="tag">[[${date.date}]]<br></span> 
+			<span th:each="date : ${nameEntry.useDates.dates}" th:remove="tag">[[${date.date}]] <span th:each="${date.notBefore || date.notAfter}" class="text-warning">(<span th:each="${date.notBefore}">[[${date.notBefore}]]</span> <span th:each="${date.notAfter}">[[${date.notAfter}]]</span>)</span><br></span> 
 			
 			<b>Date Ranges:</b><br>
 			<span th:each="date : ${nameEntry.useDates.dateRanges}" th:remove="tag">[[${date.fromDate}]] - [[${date.toDate}]]<br></span> 
@@ -152,7 +152,7 @@
 	<td>
 			<span th:if="${record.description.existDates != null}">
 			<b>Dates:</b><br>
-			<span th:each="date : ${record.description.existDates.dates}" th:remove="tag">[[${date.date}]]<br></span> 
+			<span th:each="date : ${record.description.existDates.dates}" th:remove="tag">[[${date.date}]] <span th:if="${date.notBefore}" class="text-warning">(<span th:if="${date.notBefore != null OR date.notAfter != null}">[[${date.notBefore}]]</span> - <span th:if="${date.notAfter}">[[${date.notAfter}]]</span>)</span></span><br> 
 			
 			<b>Date Ranges:</b><br>
 			<span th:each="date : ${record.description.existDates.dateRanges}" th:remove="tag">[[${date.fromDate.date}]] - [[${date.toDate.date}]] <span class="text-warning">([[${date.fromDate.standardDate}]] - [[${date.toDate.standardDate}]])</span><br></span> 
