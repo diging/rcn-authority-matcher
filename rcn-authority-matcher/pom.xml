@@ -28,6 +28,8 @@
 		<db.password></db.password>
 
 		<upload.files.directory></upload.files.directory>
+		<hibernate.index.base></hibernate.index.base>
+		<hibernate.index.on.startup>false</hibernate.index.on.startup>
 
 		<kafka.hosts>localhost:9092</kafka.hosts>
 		<log.level>debug</log.level>
