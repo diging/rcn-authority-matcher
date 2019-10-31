@@ -15,7 +15,7 @@
 		<spring-data.version>Lovelace-RELEASE</spring-data.version>
 		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
 		<spring.kafka.version>2.2.8.RELEASE</spring.kafka.version>
-		
+
 		<diging.oauth.tokens.version>0.4</diging.oauth.tokens.version>
 		<diging.rcn.model.version>0.1</diging.rcn.model.version>
 		<diging.rcn.kafka.messages>0.1</diging.rcn.kafka.messages>
@@ -26,11 +26,16 @@
 		<db.database.url></db.database.url>
 		<db.user></db.user>
 		<db.password></db.password>
-		
+
 		<upload.files.directory></upload.files.directory>
 
 		<kafka.hosts>localhost:9092</kafka.hosts>
 		<log.level>debug</log.level>
+
+		<tomcat.deploy.path></tomcat.deploy.path>
+		<tomcat.app.name>citesphere</tomcat.app.name>
+		<tomcat.server.id>TomcatServer</tomcat.server.id>
+
 	</properties>
 
 	<dependencyManagement>
@@ -314,6 +319,16 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>${tomcat.deploy.path}</url>
+					<server>${tomcat.server.id}</server>
+					<path>/${tomcat.app.name}</path>
 				</configuration>
 			</plugin>
 		</plugins>
