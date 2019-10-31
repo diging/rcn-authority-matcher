@@ -35,6 +35,20 @@
 		<tomcat.deploy.path></tomcat.deploy.path>
 		<tomcat.app.name>citesphere</tomcat.app.name>
 		<tomcat.server.id>TomcatServer</tomcat.server.id>
+		
+		<app.name>Citesphere</app.name>
+        <app.url></app.url>
+        
+		<email.host></email.host>
+        <email.port>25</email.port>
+        <email.username></email.username>
+        <email.password></email.password>
+        <email.from></email.from>
+        <email.enabled>true</email.enabled>
+        <email.transport.protocol>smtp</email.transport.protocol>
+        <email.smtp.auth>true</email.smtp.auth>
+        <email.smtp.starttls.enable>true</email.smtp.starttls.enable>
+        <email.debug>false</email.debug>
 
 	</properties>
 
