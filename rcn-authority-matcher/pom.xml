@@ -14,15 +14,42 @@
 		<spring-security-version>5.1.4.RELEASE</spring-security-version>
 		<spring-data.version>Lovelace-RELEASE</spring-data.version>
 		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+		<spring.kafka.version>2.2.8.RELEASE</spring.kafka.version>
+
+		<diging.oauth.tokens.version>0.4</diging.oauth.tokens.version>
+		<diging.rcn.model.version>0.1</diging.rcn.model.version>
+		<diging.rcn.kafka.messages>0.1</diging.rcn.kafka.messages>
 
 		<admin.password>$2a$04$oQo44vqcDIFRoYKiAXoNheurzkwX9dcNmowvTX/hsWuBMwijqn44i</admin.password>
-		
-		<db.driver>com.mysql.jdbc.Driver</db.driver>
-        <db.database.url></db.database.url>
-        <db.user></db.user>
-        <db.password></db.password>
 
+		<db.driver>com.mysql.jdbc.Driver</db.driver>
+		<db.database.url></db.database.url>
+		<db.user></db.user>
+		<db.password></db.password>
+
+		<upload.files.directory></upload.files.directory>
+
+		<kafka.hosts>localhost:9092</kafka.hosts>
 		<log.level>debug</log.level>
+
+		<tomcat.deploy.path></tomcat.deploy.path>
+		<tomcat.app.name>authmatcher</tomcat.app.name>
+		<tomcat.server.id>TomcatServer</tomcat.server.id>
+		
+		<app.name>Citesphere</app.name>
+        <app.url></app.url>
+        
+		<email.host></email.host>
+        <email.port>25</email.port>
+        <email.username></email.username>
+        <email.password></email.password>
+        <email.from></email.from>
+        <email.enabled>true</email.enabled>
+        <email.transport.protocol>smtp</email.transport.protocol>
+        <email.smtp.auth>true</email.smtp.auth>
+        <email.smtp.starttls.enable>true</email.smtp.starttls.enable>
+        <email.debug>false</email.debug>
+
 	</properties>
 
 	<dependencyManagement>
@@ -47,6 +74,27 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>edu.asu.diging</groupId>
+			<artifactId>rcn-model</artifactId>
+			<version>${diging.rcn.model.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.asu.diging</groupId>
+			<artifactId>oauth-tokens</artifactId>
+			<version>${diging.oauth.tokens.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.asu.diging</groupId>
+			<artifactId>rcn-kafka-messages</artifactId>
+			<version>${diging.rcn.kafka.messages}</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.asu.diging</groupId>
+			<artifactId>simple-users</artifactId>
+			<version>0.6</version>
+		</dependency>
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -86,12 +134,20 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security-version}</version>
 		</dependency>
-		
+
 		<!-- Spring Data -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+			<version>${spring.kafka.version}</version>
+		</dependency>
 
 		<!-- Spring AOP + AspectJ -->
 		<dependency>
@@ -111,11 +167,6 @@
 			<version>1.8.9</version>
 		</dependency>
 
-		<dependency>
-			<groupId>edu.asu.diging</groupId>
-			<artifactId>simple-users</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -204,6 +255,32 @@
 			<version>3.0.4.RELEASE</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+
+		<!-- tessaract/tika -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>1.22</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
@@ -212,7 +289,6 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-
 
 	</dependencies>
 
@@ -257,6 +333,16 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>${tomcat.deploy.path}</url>
+					<server>${tomcat.server.id}</server>
+					<path>/${tomcat.app.name}</path>
 				</configuration>
 			</plugin>
 		</plugins>

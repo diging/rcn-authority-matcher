@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/resources/font-awesome-5.7.2/css/all.css}" type="text/css"  />
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">My awesome webapp</title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">RCN Authority Matcher</title>
     
     <!-- Bootstrap core CSS -->
     <link th:href="@{/resources/bootstrap/css/bootstrap.min.css}" type="text/css" rel="stylesheet">
@@ -35,6 +35,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  	<script th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
 	<script th:src="@{/resources/bootstrap/js/main.js}"></script>
+	<script th:src="@{/resources/pagination/jquery.twbsPagination.min.js}"></script>
   </head>
 
   <body style="padding-bottom: 20px;">
@@ -46,8 +47,24 @@
 	          		<a th:href="@{/}" >Home</a>
 	          	</li>
 	          	
+	          	<li sec:authorize="hasAnyRole('USER', 'ADMIN')" role="presentation">
+	          		<a th:href="@{/auth/datasets}" >Datasets</a>
+	          	</li>
+	          	
+	          	<li sec:authorize="hasAnyRole('USER', 'ADMIN')" role="presentation">
+	          		<a th:href="@{/auth/datasets/match}" >Match</a>
+	          	</li>
+	          	
+	          	<li sec:authorize="hasAnyRole('USER', 'ADMIN')" role="presentation">
+	          		<a th:href="@{/auth/dscontent/upload}" >Upload</a>
+	          	</li>
+	          	
 	          	<li sec:authorize="hasRole('ADMIN')" role="presentation">
 	          		<a th:href="@{/admin/user/list}" >Users</a>
+	          	</li>
+	          	
+	          	<li sec:authorize="hasRole('ADMIN')" role="presentation">
+	          		<a th:href="@{/admin/apps/add}" >Apps</a>
 	          	</li>
 	          	
 	          	<li sec:authorize="isAuthenticated()" role="presentation">
@@ -72,7 +89,7 @@
 	    </div>
       
       
-	    <div th:if="${show_alert}" class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
+	    <div th:if="${show_alert}" class="alert alert-[[${alert_type}]]" role="alert">[[${alert_msg}]]</div>
 		
 	    <!-- Content -->
 	    <div layout:fragment="content">

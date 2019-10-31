@@ -1,0 +1,46 @@
+<html layout:decorate="~{layouts/main}">
+  <head>
+    <title>Authority Matcher</title>
+  </head>
+  <body>
+   <div layout:fragment="content">
+   
+   <script>
+   //# sourceURL=delete.js
+   $(function() {
+	   console.log($(".deleteBtn"))
+	  $(".deleteBtn").click(function(event) {
+		  event.preventDefault();
+		  console.log($(event.target).closest("form"));
+		  var deleteUrl = $(event.target).closest("form").attr('action')
+		  var csrf = "[['?' + ${_csrf.parameterName + '=' + _csrf.token}]]";
+    	  $.ajax({
+		    url: deleteUrl + csrf,
+		    type: 'DELETE',
+		    success: function(result) {
+		    	location.reload();
+		    }
+		  });
+	  });
+   });
+   </script>
+
+<h2>Datasets</h2>
+
+<p>
+	<a class="btn btn-primary btn-sm" th:href="@{/auth/datasets/add}" >Create new Dataset</a>
+</p>
+
+<ul class="list-group">
+	<li th:each="ds : ${datasets}" class="list-group-item clearfix">
+		<a th:href="@{'/auth/datasets/' + ${ds.id}} " th:text="${ds.title}"></a>
+		
+		<form class="pull-right deleteForm" action="#" th:action="@{'/auth/datasets/' + ${ds.id}}">
+			<button data-posturl="@{'/auth/datasets/' + ${ds.id}}" type="submit" class="btn btn-link deleteBtn"><i class="fas fa-trash-alt"></i></button>
+		</form>
+	</li>
+</ul>
+
+   </div>
+  </body>
+</html>

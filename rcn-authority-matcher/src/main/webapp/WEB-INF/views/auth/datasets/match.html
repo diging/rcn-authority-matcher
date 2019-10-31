@@ -1,0 +1,30 @@
+<html layout:decorate="~{layouts/main}">
+  <head>
+    <title>Authority Matcher</title>
+  </head>
+  <body>
+   <div layout:fragment="content">
+
+<h2>Match Authorities in Datasets</h2>
+
+
+<form action="#" th:action="@{/auth/datasets/match}" method="POST" th:object="${matchForm}">
+	<label>Base Dataset: </label>
+	<select th:field="*{baseDataset}" class="form-control">
+    <option th:each="ds : ${datasets}" th:value="${ds.id}" th:text="${ds.title}"></option>
+	</select>
+	<p class="text-danger"><th:errors path="baseDataset"/></p>
+	
+	<label>Compare to: </label>
+	<select th:field="*{compareDataset}" class="form-control">
+    <option th:each="ds : ${datasets}" th:value="${ds.id}" th:text="${ds.title}"></option>
+	</select>
+	<p class="text-danger"><th:errors path="compareDataset"/></p>
+	
+	<button type="submit" class="btn btn-primary">Match!</button>
+	
+</form>
+
+  </div>
+  </body>
+</html>

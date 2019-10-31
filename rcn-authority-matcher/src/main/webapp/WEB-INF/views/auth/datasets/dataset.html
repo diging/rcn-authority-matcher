@@ -1,0 +1,63 @@
+<html layout:decorate="~{layouts/main}">
+  <head>
+    <title>Authority Matcher</title>
+  </head>
+  <body>
+   <div layout:fragment="content">
+
+<h2>Dataset: <span th:text="${dataset.title}" th:remove="tag"></span></h2>
+
+<p>
+<a th:href="@{'/auth/datasets/' + ${dataset.id} + '/jobs/matching'}">See found matches</a>
+</p>
+
+<script>
+//# sourceURL=pagination.js
+$(function() {
+	var pageUrl="[[@{'/auth/datasets/' + ${dataset.id}}]]";
+	
+	$('#pagination-records').twbsPagination({
+        totalPages: [[${recordCount}]],
+        visiblePages: 10,
+        startPage: [[${currentPage}]],
+        initiateStartPageClick: false,
+        onPageClick: function (event, page) {
+        	if (page != [[${currentPage}]]) {
+        		window.location.href = pageUrl + "?page=" + page
+        	}
+        }
+    });
+});
+</script>
+<ul id="pagination-records" class="pagination-sm"></ul>
+
+<table class="table table-striped">
+	<tr>
+		<th>Record Id</th>
+		<th>Other Record Id</th>
+		<th>Maintenance Status</th>
+		<th>Publication Status</th>
+		<th>Citation</th>
+	</tr>
+	<tr th:each="record : ${records}">
+		<td>
+		<a th:href="@{'/auth/datasets/' + ${dataset.id} + '/record/' + ${record.id}}" th:text="${record.recordId}" ></a>
+		</td>
+		<td>
+		<span th:text="${record.otherRecordId}" th:remove="tag"></span>
+		</td>
+		<td>
+		<span th:text="${record.maintenanceStatus}" th:remove="tag"></span>
+		</td>
+		<td>
+		<span th:text="${record.publicationStatus}" th:remove="tag"></span>
+		</td>
+		<td>
+		
+		</td>
+	</tr>
+</table>
+
+  </div>
+  </body>
+</html>
