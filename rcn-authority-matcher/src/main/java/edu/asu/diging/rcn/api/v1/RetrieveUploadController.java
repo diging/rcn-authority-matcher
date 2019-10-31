@@ -3,7 +3,6 @@ package edu.asu.diging.rcn.api.v1;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
