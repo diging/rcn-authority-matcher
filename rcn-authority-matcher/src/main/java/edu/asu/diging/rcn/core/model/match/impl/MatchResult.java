@@ -1,5 +1,6 @@
 package edu.asu.diging.rcn.core.model.match.impl;
 
+import edu.asu.diging.eaccpf.model.match.MasterMatch;
 import edu.asu.diging.eaccpf.model.match.Match;
 import edu.asu.diging.rcn.core.model.match.IMatchResult;
 import edu.asu.diging.rcn.core.model.match.IRecordPresentation;
@@ -7,6 +8,7 @@ import edu.asu.diging.rcn.core.model.match.IRecordPresentation;
 public class MatchResult implements IMatchResult {
 
     private Match match;
+    private MasterMatch master;
     private IRecordPresentation baseRecord;
     private IRecordPresentation matchedRecord;
     
@@ -23,6 +25,14 @@ public class MatchResult implements IMatchResult {
     @Override
     public void setMatch(Match match) {
         this.match = match;
+    }
+    @Override
+    public MasterMatch getMaster() {
+        return master;
+    }
+    @Override
+    public void setMaster(MasterMatch master) {
+        this.master = master;
     }
     /* (non-Javadoc)
      * @see edu.asu.diging.rcn.core.model.match.IMatchRecord#getBaseRecord()

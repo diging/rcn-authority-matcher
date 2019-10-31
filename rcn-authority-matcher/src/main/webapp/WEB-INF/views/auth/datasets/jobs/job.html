@@ -19,7 +19,7 @@ $(function() {
         initiateStartPageClick: false,
         onPageClick: function (event, page) {
         	if (page != [[${currentPage}]]) {
-        		window.location.href = pageUrl + "?page=" + (page-1)
+        		window.location.href = pageUrl + "?sort=score,desc&page=" + (page-1)
         	}
         }
     });

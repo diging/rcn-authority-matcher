@@ -9,7 +9,7 @@
 
 <ul class="list-group">
 	<li th:each="job : ${matchingJobs}" class="list-group-item clearfix">
-		<a th:href="@{'/auth/datasets/' + ${dataset.id} + '/jobs/matching/' + ${job.id}}">Matched with: <i>[[${job.compareDataset.title}]]</i> on [[${job.createdOn}]]</a>
+		<a th:href="@{'/auth/datasets/' + ${dataset.id} + '/jobs/matching/' + ${job.id}} + '?sort=score,desc'">Matched with: <i>[[${job.compareDataset.title}]]</i> on [[${job.createdOn}]]</a>
 		
 	</li>
 </ul>

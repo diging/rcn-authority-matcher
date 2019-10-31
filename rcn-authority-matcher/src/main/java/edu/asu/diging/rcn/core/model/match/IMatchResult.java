@@ -1,6 +1,7 @@
 package edu.asu.diging.rcn.core.model.match;
 
 import edu.asu.diging.eaccpf.model.Record;
+import edu.asu.diging.eaccpf.model.match.MasterMatch;
 import edu.asu.diging.eaccpf.model.match.Match;
 
 public interface IMatchResult {
@@ -16,5 +17,9 @@ public interface IMatchResult {
     IRecordPresentation getMatchedRecord();
 
     void setMatchedRecord(IRecordPresentation matchedRecord);
+
+    void setMaster(MasterMatch master);
+
+    MasterMatch getMaster();
 
 }
