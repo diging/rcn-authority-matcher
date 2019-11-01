@@ -74,6 +74,8 @@ public class PersistenceConfig {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.id.new_generator_mappings", "true");
+        properties.setProperty("hibernate.search.default.directory_provider", "filesystem");
+        properties.setProperty("hibernate.search.default.indexBase", env.getRequiredProperty("_hibernate_index_base"));
 
         return properties;
     }
