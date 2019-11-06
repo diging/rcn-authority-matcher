@@ -26,7 +26,7 @@ $(function() {
 	
 	$(".scoreInfo").popover({
 		'html': true,
-		'trigger': 'hover',
+		'trigger': 'click',
 	});
 });
 </script>
@@ -38,14 +38,14 @@ $(function() {
 
 		<ul class="list-group">
 			<li th:each="match : ${matches}" class="list-group-item clearfix"
-				th:classappend="${(match.match.overallScore > 0.3 ? 'list-group-item-success' : '') + (match.match.overallScore < 0.3 && match.match.overallScore > 0.2 ? 'list-group-item-warning' : '')} |">
+				th:classappend="${(match.match.overallScore >= 0.6 ? 'list-group-item-success' : '') + (match.match.overallScore < 0.6 && match.match.overallScore > 0.4 ? 'list-group-item-warning' : '')} |">
 
 				<a
 				th:href="@{'/auth/datasets/' + ${match.baseRecord.record.datasetId} + '/record/' + ${match.baseRecord.record.id}}">[[${match.baseRecord.names[0]}]]</a>
 				<span class="text-warning">has been matched to</span> <a
 				th:href="@{'/auth/datasets/' + ${match.matchedRecord.record.datasetId} + '/record/' + ${match.matchedRecord.record.id}}">[[${match.matchedRecord.names[0]}]]</a>
 				<span class="text-warning">with a score of</span>
-				[[${match.match.overallScore}]] <i class="fas fa-question-circle scoreInfo" data-toggle="popover" title="Popover title" th:attr="data-content='Name matching score: ' + ${match.match.nameScore} + '<br>Date matching score: ' + ${match.match.dateScore} + '<br>Lucene score: ' + ${match.match.luceneScore}"></i>
+				[[${match.match.overallScore}]] <i class="fas fa-question-circle scoreInfo" data-toggle="popover" th:attr="title='Matching Score: ' + ${match.match.overallScore},data-content='Name matching score: ' + ${match.match.nameScore} + '<br>Date matching score: ' + ${match.match.dateScore} + '<br>Lucene score: ' + ${match.match.luceneScore} + '<br>Biography score:'  + ${match.match.bioScore}"></i>
 
 			</li>
 		</ul>
