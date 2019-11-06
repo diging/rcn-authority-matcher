@@ -213,7 +213,7 @@
 	<td th:text="${rel.cpfRelationType}"></td>
 	<td>
 		<p th:each="entry : ${rel.relationEntries}">
-		<span th:text="${entry.text}"></span>
+		<span th:text="${entry.text}"></span><span th:if="${rel.href != null}">([[${rel.href}]])</span>
 		</p>
 		<span th:if="${rel.dates != null and not #lists.isEmpty(rel.dates)}">
 		<b>Dates:</b><br>
