@@ -17,7 +17,7 @@
 		<spring.kafka.version>2.2.8.RELEASE</spring.kafka.version>
 
 		<diging.oauth.tokens.version>0.4</diging.oauth.tokens.version>
-		<diging.rcn.model.version>0.1</diging.rcn.model.version>
+		<diging.rcn.model.version>0.2</diging.rcn.model.version>
 		<diging.rcn.kafka.messages>0.1</diging.rcn.kafka.messages>
 
 		<admin.password>$2a$04$oQo44vqcDIFRoYKiAXoNheurzkwX9dcNmowvTX/hsWuBMwijqn44i</admin.password>
