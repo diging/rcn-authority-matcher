@@ -24,7 +24,7 @@ public class DatasetController {
         model.addAttribute("dataset", datasetManager.get(datasetId));
         model.addAttribute("records", recordManager.listRecords(datasetId, pageable));
         model.addAttribute("recordCount", (int) Math.ceil(recordManager.getRecordCount(datasetId)/new Float(pageable.getPageSize())));
-        model.addAttribute("currentPage", pageable.getPageNumber());
+        model.addAttribute("currentPage", pageable.getPageNumber() > 0 ? pageable.getPageNumber() : 1);
         return "/auth/datasets/dataset";
     }
 }
